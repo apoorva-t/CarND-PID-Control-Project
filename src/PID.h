@@ -1,6 +1,8 @@
 #ifndef PID_H
 #define PID_H
 
+ enum eval {first, second, third};
+
 class PID {
 public:
   /*
@@ -10,12 +12,19 @@ public:
   double i_error;
   double d_error;
 
+  double best_error;
+
   /*
   * Coefficients
   */ 
   double Kp;
   double Ki;
   double Kd;
+
+  double dp[3];
+  eval e;
+
+  int paramIndex;
 
   /*
   * Constructor
@@ -41,6 +50,8 @@ public:
   * Calculate the total PID error.
   */
   double TotalError();
+
+  void twiddleUpdate(double curr_cte);
 };
 
 #endif /* PID_H */
