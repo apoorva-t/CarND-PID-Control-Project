@@ -1,0 +1,16 @@
+Effect of P, I, and D parameters:
+
+P : The proportional parameter sets the steer value to a factor of the difference between ideal car position and actual car position i.e. crosstrack error term. Increasing the P parameter will help the car get to the ideal value faster. But if the P parameter is too high, the response to a small 'cte' will be large, overshooting the ideal value and leading to oscillations of the car around ideal position. This was what was observed when tuning the P parameter.
+
+D : The derivative parameter sets the steer value to a factor of the difference between current and previous crosstrack error. The derivative parameter causes the correction response to be proportional to the rate of change of error. Increasing the value of the D parameter helps dampen oscillations of the car around the ideal position caused by overshooting due to high P value.
+
+I : The integral parameters sets the steer value to a factor of the accumulated error. Thus if the car has a bias or drift from the center of the lane, over time the integral error will accumulate and the 'I' parameter will cause the steer value to correct course. A high value of the I parameter causes the car to oscillate frequently around the center as even a small value of i_error contributes to the response. So the I parameter is kept much smaller compared to the P and D parameter.
+
+
+Choice of P, I, D parameters:
+
+I started with using just the P parameter (with D and I set to zero) as shown in project Q&A video. Starting with a value of 0.1, this was tuned up until the car started showing oscillations around the center of the lane. The next step was to bump up the value of the D parameter till the oscillations of the car around the center of the lane were reasonably dampened. Finally, the I parameter was tuned up very slightly to make sure the car did not consistently swerve too far to one side of the lane, especially during turns. As the 'I' parameter was bumped up from zero, the D parameter also had to be increased to compensate for the oscillations introduced by 'I'.
+
+After the car started going around the loop without leaving the drivable part of the lane, I used twiddle to tune up/down each parameter by 5-10% and find the combination that lowers the error as described in the lectures. Instead of running each perturbation of the parameter for a whole loop around the track, I let it run for 900 steps measuring the root sum square error. However, after a few iterations of running twiddle, the car would end up going off track. So instead, I used 2-3 iterations of Twiddle to see which directions the parameters change in and then used manual tuning to finalize the parameters around that range.
+
+I have kept the speed/throttle fixed, and only for sharp turns where the steer_value exceeds 0.5, I am reducing the speed to 70%. I think implementing another PID controller for the speed might help make smoother turns.

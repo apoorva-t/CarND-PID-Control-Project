@@ -18,8 +18,8 @@ void PID::Init(double Kp, double Ki, double Kd) {
 	this->Kd = Kd;
 
 	dp[0] = 0.05 * Kp;
-	dp[1] = 0.1 * Ki;
-	dp[2] = 0.01 * Kd;
+	dp[1] = 0.05 * Ki;
+	dp[2] = 0.05 * Kd;
 	paramIndex = 0;
 	e = first;
 

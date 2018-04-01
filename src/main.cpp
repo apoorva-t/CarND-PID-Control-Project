@@ -36,14 +36,7 @@ int main()
 
   PID pid;
   // TODO: Initialize the pid variable.
-  //double kp = 1, ki = 0.001, kd = 13;
-  //double kp = 0.12, ki = 0.0002, kd = 3;
-
-  //double kp = 0.9, ki = 0.0012, kd = 15;
-  //double kp = 0.9, ki = 0.00108, kd = 15.2;
-  //double kp = 0.9, ki = 0.0009, kd = 15.7;
-  //double kp = 0.9, ki = 0.0008, kd = 15.87;
-  double kp = 0.9, ki = 0.0008, kd = 16.1;
+  double kp = 0.9, ki = 0.0008, kd = 19.5;
   pid.Init(kp,ki,kd);
 
   std::ofstream myfile;
@@ -96,7 +89,7 @@ int main()
 
           // DEBUG
           //std::cout << "p_error" << pid.p_error << "i_error" << pid.i_error << "d_error" << pid.d_error << std::endl;
-          std::cout << "Kp: " << pid.Kp << "Ki: " << pid.Ki << "Kd: " << pid.Kd << std::endl;
+          //std::cout << "Kp: " << pid.Kp << "Ki: " << pid.Ki << "Kd: " << pid.Kd << std::endl;
 
           if (count % 900 == 0)
           {
@@ -104,6 +97,7 @@ int main()
         	  {
         		  pid.best_error = curr_err;
         	  }
+        	  //uncomment to use twiddle tuning
         	  //pid.twiddleUpdate(curr_err);
         	  curr_err = 0;
         	  //std::string reset_msg = "42[\"reset\",{}]";
